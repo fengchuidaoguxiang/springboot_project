@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello</title>
+</head>
+<body>
+   <div id="app">
+<!--       vue基本使用-->
+       <button @click="handleClick">点我</button>
+       <br/>
+       <input type="text" v-model="num"> <button @click="num++">+</button>
+       <h1>
+            非常帅！<br>
+           {{num}} 位女神为其着迷！
+       </h1>
+       <span v-text="name"></span><br/>
+       <span v-html="name"></span>
+<!--       v-model-->
+       <hr>
+       <h1>传智博客已开设下列课程：</h1>
+       <input type="checkbox" v-model="lessons" value="Java"/>Java <br/>
+       <input type="checkbox" v-model="lessons" value="Python"/>Python <br/>
+       <input type="checkbox"v-model="lessons" value="IOS"/>IOS <br/>
+
+       <h1>
+           您已购买下列课程：{{lessons.join(",")}}
+       </h1>
+<!--       v-on-->
+       <div style="width:100px; height:100px; background-color:cornsilk" @click="print('div')">
+            div
+           <button @click.stop="print('button')">点我试试</button>
+           <a href="http://www.baidu.com" @click.prevent="print('百度')">百度一下，你就疯了</a>
+       </div>
+       <hr>
+<!--       v-for-->
+<!--       <ul>-->
+<!--           <li v-for="u in users">-->
+<!--                {{u.name + "," + u.gender + "," + u.age}}-->
+<!--           </li>-->
+<!--       </ul>-->
+       <ul>
+           <li v-for="(u,i) in users" :key="u.name">
+               {{i}} {{u.name + "," + u.gender + "," + u.age}}
+           </li>
+       </ul>
+       <ul>
+           <li v-for="(v,k,i) in users[0]">{{k + "," + v + "," + i}}</li>
+       </ul>
+       <ul>
+           <li v-for="i in 5">{{i}}</li>
+       </ul>
+       <hr>
+<!--       v-if-->
+<!--        事件中直接写js片段-->
+       <button @click="show = !show">点击切换</button><br/>
+       <h1 v-if="show">
+            你好
+       </h1>
+       <h1 v-show="show">
+           你很好，我记住了！
+       </h1>
+       <ul>
+           <li v-for="i in 5">
+               <span v-if="i%2 === 0">偶数：{{i}}</span>
+               <span v-else style="background-color:#cccccc;">奇数：{{i}}</span>
+           </li>
+       </ul>
+   </div>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: "#app", // element, vue控制的标签
+            data: {
+                name: "虎哥",
+                num: 1,
+                lessons: [],
+                users:[
+                    {name:'柳岩', gender:'女', age: 21},
+                    {name:'虎哥', gender:'男', age: 30},
+                    {name:'范冰冰', gender:'女', age: 24},
+                    {name:'刘亦菲', gender:'女', age: 18},
+                    {name:'古力娜扎', gender:'女', age: 25}
+                ],
+                show: true
+            },
+            methods: {
+                handleClick(){
+                    console.log(this);
+                    console.log("hello!");
+                },
+                print(msg){
+                    console.log(msg);
+                }
+            },
+            created(){
+                // 向后台发起ajax请求，完成对data数据初始化
+                // setTimeout(() => this.name = "虎哥 真的",1000);
+                this.name = "<font color='blue'>虎哥</font>"
+            }
+        });
+    </script>
+</body>
+</html>
